@@ -28,22 +28,21 @@ rf = csv.reader(f)
 
 # 데이터 넣기
 for line in rf:
-  line[1] = line[1].replace("(","")
-  line[1] = line[1].replace(")","")
-  line[1] = line[1].split(" ")
-  
-  line[2] = line[2].replace("[","")
-  line[2] = line[2].replace("]","")
-  line[2] = line[2].replace("'","")
-  line[2] = line[2].split(",")
-  print(line[2][0])
-  
-  
-  data = {
-      u'idx': line[0],
-      u'date': line[1][0],
-      u'day': line[1][1],
-      u'menu': line[2],
-  }
-  update_time, menu_ref = db.collection(u'StaffMenuData').add(data)
-  print(f'Added document with id {menu_ref.id}')
+  if line[0] != "":
+    line[1] = line[1].replace("(","")
+    line[1] = line[1].replace(")","")
+    line[1] = line[1].split(" ")
+    
+    line[2] = line[2].replace("[","")
+    line[2] = line[2].replace("]","")
+    line[2] = line[2].replace("'","")
+    line[2] = line[2].split(",")
+    
+    data = {
+        u'idx': line[0],
+        u'date': line[1][0],
+        u'day': line[1][1],
+        u'menu': line[2],
+    }
+    update_time, menu_ref = db.collection(u'StaffMenuData').add(data)
+    print(f'Added document with id {menu_ref.id}')
